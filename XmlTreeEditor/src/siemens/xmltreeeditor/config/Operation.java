@@ -16,15 +16,80 @@
 
 package siemens.xmltreeeditor.config;
 
-import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.ValidationException;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+import siemens.xmltreeeditor.XmlTreeEditorSetting;
 
 /**
  *
  * @author Martin Brazdil <martin.brazdil at gmail.com>
  */
-@XmlTransient
-public abstract class Operation {
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
+public class Operation {
     
-    public abstract void doOperation();
+    private String operType;
+    
+    private String nodeName;
+    
+    private String oldValue;
+    
+    private String newValue;
+    
+
+    public String getOperType() {
+        return operType;
+    }
+
+    @XmlAttribute(name = XmlTreeEditorSetting.XML_ATTR_OPER_TYPE)
+    public void setOperType(String operType) throws ValidationException {
+        for (String oper: XmlTreeEditorSetting.XML_OPS) {
+            if (oper.equals(operType)) {
+               this.operType = operType; 
+               return ;
+            }
+        }
+        throw new ValidationException("Invalid type of operation \"" + operType + "\"");
+    }
+
+    public String getNodeName() {
+        return nodeName;
+    }
+
+    public void setNodeName(String nodeName) {
+        this.nodeName = nodeName;
+    }
+
+    public String getOldValue() {
+        return oldValue;
+    }
+
+    @XmlAttribute(name = XmlTreeEditorSetting.XML_ATTR_OLD_VAL)
+    public void setOldValue(String oldValue) {
+        this.oldValue = oldValue;
+    }
+
+    public String getNewValue() {
+        return newValue;
+    }
+
+    @XmlAttribute(name = XmlTreeEditorSetting.XML_ATTR_NEW_VAL)
+    public void setNewValue(String newValue) {
+        this.newValue = newValue;
+    }
+    
+    public void doOperation() {
+        switch (operType) {
+            case XmlTreeEditorSetting.XML_OP_DELETE_NODE: {
+                break;   
+            }
+            case XmlTreeEditorSetting.XML_OP_REPLACE_VAL: {
+                break;
+            }
+        }  
+    }
     
 }

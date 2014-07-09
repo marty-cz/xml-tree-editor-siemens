@@ -23,6 +23,9 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.ValidationEvent;
+import javax.xml.bind.ValidationEventHandler;
+import javax.xml.bind.helpers.DefaultValidationEventHandler;
 
 /**
  *
@@ -37,18 +40,18 @@ public class ConfigHelper {
           throw new IOException("File is not readable");
         }
         try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(OperationDeleteNode.class, OperationReplaceValue.class, Config.class);
+            JAXBContext jaxbContext = JAXBContext.newInstance(Config.class);
             Unmarshaller jaxbUnmarsh = jaxbContext.createUnmarshaller();
             return (Config) jaxbUnmarsh.unmarshal(configFile.toFile());
-        } catch (JAXBException ex) {
-            ex.printStackTrace(System.out);
-            throw new JAXBException("Invalid XML structure " + ex.getMessage(), ex);
+        } catch (Exception ex) {
+            throw new JAXBException("Invalid XML structure" 
+                    + ((ex.getCause() != null) ? " ("+ex.getCause().getMessage() + ") " : ""), ex);
         }
     }
     
     public static void saveConfigToXmlFile(Path configFile, Config config) throws JAXBException {
         
-        JAXBContext jaxbContext = JAXBContext.newInstance(OperationDeleteNode.class, OperationReplaceValue.class, Config.class);
+        JAXBContext jaxbContext = JAXBContext.newInstance(Config.class);
         Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 
         jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);

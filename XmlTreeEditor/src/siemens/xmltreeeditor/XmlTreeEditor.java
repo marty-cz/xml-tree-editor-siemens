@@ -21,7 +21,7 @@ import java.nio.file.Paths;
 import javax.xml.bind.JAXBException;
 import siemens.xmltreeeditor.config.Config;
 import siemens.xmltreeeditor.config.ConfigHelper;
-import siemens.xmltreeeditor.config.OperationDeleteNode;
+import siemens.xmltreeeditor.config.Operation;
 
 /**
  *
@@ -47,12 +47,10 @@ public class XmlTreeEditor {
         try {
             Config conf = ConfigHelper.loadConfigFromXmlFile(Paths.get(args[XmlTreeEditorSetting.CONFIG_ARG_IDX-1]));
             System.out.println("Successfully loaded");
-            System.out.println(conf.getOperations().get(0));
-            conf.getOperations().add(new OperationDeleteNode());
             ConfigHelper.saveConfigToXmlFile(null, conf);
             System.out.println("Successfully saved");
         } catch (IOException | JAXBException ex) {
-            printError(args[XmlTreeEditorSetting.CONFIG_ARG_IDX-1]+": "+ex.getMessage(),
+            printError(args[XmlTreeEditorSetting.CONFIG_ARG_IDX-1] +": " + ex.getMessage(),
                     XmlTreeEditorSetting.COMMON_ERR_CODE);
         }
     }

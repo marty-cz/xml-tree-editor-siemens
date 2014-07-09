@@ -30,9 +30,13 @@ public class XmlTreeEditorSetting {
     public static final String XML_NODE_INPUT  = "input";
     public static final String XML_NODE_SCHEMA = "schema";
     public static final String XML_NODE_OPERS  = "operations";
-    public static final String XML_NODE_DELETE_NODE = "deleteNode";
-    public static final String XML_NODE_REPLACE_VAL = "replaceValue";
+    public static final String XML_NODE_OPER   = "operation";
     
+    public static final String XML_OP_DELETE_NODE = "deleteNode";
+    public static final String XML_OP_REPLACE_VAL = "replaceValue";
+    public static final String[] XML_OPS = {XML_OP_DELETE_NODE, XML_OP_REPLACE_VAL};
+    
+    public static final String XML_ATTR_OPER_TYPE = "operType";
     public static final String XML_ATTR_NODE_NAME = "nodeName";
     public static final String XML_ATTR_OLD_VAL   = "oldValue";
     public static final String XML_ATTR_NEW_VAL   = "newValue";

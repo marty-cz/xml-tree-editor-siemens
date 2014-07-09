@@ -37,23 +37,17 @@ import siemens.xmltreeeditor.XmlTreeEditorSetting;
 @XmlAccessorType(XmlAccessType.NONE)
 public class Config {
     
-    @XmlElement(name = XmlTreeEditorSetting.XML_NODE_INPUT)
     private String input;
     
-    @XmlElement(name = XmlTreeEditorSetting.XML_NODE_SCHEMA)
     private String schema;
     
-    @XmlElement(name = XmlTreeEditorSetting.XML_NODE_OPERS)
-  //  @XmlElementRefs({
-  //      @XmlElementRef(type=OperationDeleteNode.class),
-  //      @XmlElementRef(type=OperationReplaceValue.class)
-  //  })
     private List<Operation> operations = null;
 
     public String getInput() {
         return input;
     }
 
+    @XmlElement(name = XmlTreeEditorSetting.XML_NODE_INPUT)
     public void setInput(String input) {
         this.input = input;
     }
@@ -62,6 +56,7 @@ public class Config {
         return schema;
     }
 
+    @XmlElement(name = XmlTreeEditorSetting.XML_NODE_SCHEMA)
     public void setSchema(String schema) {
         this.schema = schema;
     }
@@ -70,10 +65,11 @@ public class Config {
         return operations;
     }
 
+    @XmlElementWrapper(name = XmlTreeEditorSetting.XML_NODE_OPERS)
+    @XmlElement(name=XmlTreeEditorSetting.XML_NODE_OPER)
     public void setOperations(List<Operation> operations) {
         this.operations = operations;
     }
-    
     
     
 }
