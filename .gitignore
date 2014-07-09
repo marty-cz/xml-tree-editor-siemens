@@ -1,3 +1,10 @@
+XmlTreeEditor/nbproject/private/
+XmlTreeEditor/build/
+XmlTreeEditor/nbbuild/
+XmlTreeEditor/dist/
+XmlTreeEditor/nbdist/
+XmlTreeEditor/nbactions.xml
+
 *.class
 
 # Mobile Tools for Java (J2ME)
