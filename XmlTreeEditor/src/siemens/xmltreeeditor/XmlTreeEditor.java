@@ -16,17 +16,45 @@
 
 package siemens.xmltreeeditor;
 
+import java.io.IOException;
+import java.nio.file.Paths;
+import javax.xml.bind.JAXBException;
+import siemens.xmltreeeditor.config.Config;
+import siemens.xmltreeeditor.config.ConfigHelper;
+import siemens.xmltreeeditor.config.OperationDeleteNode;
+
 /**
  *
  * @author Martin Brazdil <martin.brazdil at gmail.com>
  */
 public class XmlTreeEditor {
+    
+    private static void printError(String errMsg, int errCode) {
+        System.err.println("Error: " + errMsg);
+        if (errCode > 0) {
+            System.exit(errCode);
+        }
+    }
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        if (args.length != XmlTreeEditorSetting.CONFIG_ARG_IDX) {
+            printError("Invalid arguments count (must have " + XmlTreeEditorSetting.CONFIG_ARG_IDX + " argument)",
+                    XmlTreeEditorSetting.COMMON_ERR_CODE);
+        }
+        try {
+            Config conf = ConfigHelper.loadConfigFromXmlFile(Paths.get(args[XmlTreeEditorSetting.CONFIG_ARG_IDX-1]));
+            System.out.println("Successfully loaded");
+            System.out.println(conf.getOperations().get(0));
+            conf.getOperations().add(new OperationDeleteNode());
+            ConfigHelper.saveConfigToXmlFile(null, conf);
+            System.out.println("Successfully saved");
+        } catch (IOException | JAXBException ex) {
+            printError(args[XmlTreeEditorSetting.CONFIG_ARG_IDX-1]+": "+ex.getMessage(),
+                    XmlTreeEditorSetting.COMMON_ERR_CODE);
+        }
     }
     
 }
