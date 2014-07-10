@@ -16,13 +16,13 @@
 
 package siemens.xmltreeeditor.config;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import siemens.xmltreeeditor.XmlTreeEditorSetting;
 
 /**
@@ -31,6 +31,10 @@ import siemens.xmltreeeditor.XmlTreeEditorSetting;
  * @author Martin Brazdil <martin.brazdil at gmail.com>
  */
 @XmlRootElement(name = XmlTreeEditorSetting.XML_NODE_CONFIG)
+// Order is important becase of XSD validation!
+@XmlType(propOrder = { XmlTreeEditorSetting.XML_NODE_INPUT, 
+                       XmlTreeEditorSetting.XML_NODE_SCHEMA,
+                       XmlTreeEditorSetting.XML_NODE_OPERS })
 @XmlAccessorType(XmlAccessType.NONE)
 public class Config {
     
@@ -64,7 +68,7 @@ public class Config {
      * The path is relative to placement of config file.
      * @param input the path
      */
-    @XmlElement(name = XmlTreeEditorSetting.XML_NODE_INPUT)
+    @XmlElement(name = XmlTreeEditorSetting.XML_NODE_INPUT, required = true)
     public void setInput(String input) {
         this.input = input;
     }

@@ -34,7 +34,7 @@ public class FileUtils {
      */
     public static void verifyFile(Path f) 
             throws IOException {
-        if (f == null || Files.isReadable(f) == false) {
+        if (f == null || Files.isDirectory(f) || Files.isReadable(f) == false ) {
           throw new IOException(((f != null) ? f.getFileName() : "\"\"") + ": File is not readable");
         }
     }

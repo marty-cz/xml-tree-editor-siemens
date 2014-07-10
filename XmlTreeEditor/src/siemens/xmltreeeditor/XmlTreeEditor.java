@@ -55,7 +55,7 @@ public class XmlTreeEditor {
         }
           // xml editing
         try {
-              // loads config file and parse it
+              // load config file and parse it
             Path configPath = Paths.get(args[XmlTreeEditorSetting.CONFIG_ARG_IDX-1]);
             ConfigHolder configHolder = new ConfigHolder(configPath);
             configHolder.loadConfig();
@@ -63,7 +63,7 @@ public class XmlTreeEditor {
               // absolute path to the config file
             String configParentPath = configPath.getParent().toString() + System.getProperty("file.separator");
             
-              // creates a xml holder for input xml file
+              // create a xml holder for input xml file
             DomXmlHolder domXmlHolder = new DomXmlHolder(Paths.get(configParentPath + config.getInput()));
               // parsing input xml file
             domXmlHolder.parseXml();
@@ -75,7 +75,7 @@ public class XmlTreeEditor {
                     System.err.println(String.format("Input xml file \"%s\" is valid according to schema \"%s\"",
                             config.getInput(), config.getSchema()));
                 } catch (IOException ex) {
-                    skipOperations = true;  // !! saves unchanched input xml file
+                    skipOperations = true;  // !! save unchanched input xml file
                 } catch (SAXException ex) {
                     printError(ex.getMessage(), XmlTreeEditorSetting.OK_ERR_CODE);  // do not exit !
                 }     
@@ -84,7 +84,7 @@ public class XmlTreeEditor {
             if (skipOperations == false) {
                 configHolder.execAllOperations(domXmlHolder.getXmlRootElem());
             }
-              // saves the result to the new file
+              // save the result to the new file
             domXmlHolder.saveToXmlFile(Paths.get(configParentPath 
                     + XmlTreeEditorSetting.getXmlResultPath(config.getInput())));
     

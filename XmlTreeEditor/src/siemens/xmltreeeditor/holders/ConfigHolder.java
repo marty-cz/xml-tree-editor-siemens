@@ -16,13 +16,25 @@
 
 package siemens.xmltreeeditor.holders;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.SchemaOutputResolver;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.Result;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
 import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 import siemens.xmltreeeditor.config.Config;
 import siemens.xmltreeeditor.config.Operation;
 import siemens.xmltreeeditor.config.operations.XmlOperation;
@@ -122,6 +134,39 @@ public class ConfigHolder {
     }
     
     /**
+     * Gets a schema object of JAXB object.
+     * @return the schema or <code>null</code> in case of error occurs
+     * Source: http://stackoverflow.com/questions/2603778/how-can-i-unmarshall-in-jaxb-and-enjoy-the-schema-validation-without-using-an-ex
+     */
+    private Schema getSchemaOfConfigXml() {
+        try {
+            final List<ByteArrayOutputStream> outs = new ArrayList<>();
+              // create a schema generator
+            jaxbContext.generateSchema(new SchemaOutputResolver(){
+                @Override
+                public Result createOutput(String namespaceUri, String suggestedFileName) throws IOException {
+                    ByteArrayOutputStream out = new ByteArrayOutputStream();
+                    outs.add(out);
+                    StreamResult streamResult = new StreamResult(out);
+                    streamResult.setSystemId("");  // because of Stream usage
+                    return streamResult;
+                }});
+              // save content of generator
+            StreamSource[] sources = new StreamSource[outs.size()];
+            for (int i=0; i<outs.size(); i++) {
+                ByteArrayOutputStream out = outs.get(i);
+                // to examine schema:  System.out.append(new String(out.toByteArray()));
+                sources[i] = new StreamSource(new ByteArrayInputStream(out.toByteArray()),"");
+            }
+              // create schema
+            SchemaFactory sf = SchemaFactory.newInstance( XMLConstants.W3C_XML_SCHEMA_NS_URI );
+            return sf.newSchema(sources);
+        } catch (IOException | SAXException ex) {
+            return null;
+        }
+    }
+    
+    /**
      * Loads (unmarshalling) config object from config file.
      * @throws JAXBException if unmarshalling error occurs
      */
@@ -131,6 +176,8 @@ public class ConfigHolder {
         config = null;
         try {
             Unmarshaller jaxbUnmarsh = jaxbContext.createUnmarshaller();
+              // get schema (xsd) of JAXB config object
+            jaxbUnmarsh.setSchema(getSchemaOfConfigXml());
             config = (Config) jaxbUnmarsh.unmarshal(configFile.toFile());
         } catch (Exception ex) {
             throw new JAXBException(configFile.getFileName() + ": Invalid XML structure" 
