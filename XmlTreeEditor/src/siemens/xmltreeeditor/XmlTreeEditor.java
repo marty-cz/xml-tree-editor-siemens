@@ -25,7 +25,9 @@ import siemens.xmltreeeditor.holders.ConfigHolder;
 import siemens.xmltreeeditor.holders.DomXmlHolder;
 
 /**
- *
+ * Xml tree editor is command line application that allows editing and 
+ * validating xml files. 
+ * @see <code>README.md</code> file of this project
  * @author Martin Brazdil <martin.brazdil at gmail.com>
  */
 public class XmlTreeEditor {
