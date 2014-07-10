@@ -21,16 +21,18 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- *
+ * This class is used to implement <i>node value replacement</i> operation.
+ * Basically replaces old value (string) with new one of all nodes in document.
  * @author Martin Brazdil <martin.brazdil at gmail.com>
  */
 public class XmlOperationReplaceValue implements XmlOperation {
 
     /**
-     * 
-     * @param nodes
-     * @param oldValue
-     * @param newValue 
+     * Replaces value of all nodes.
+     * Recursive searching is used.
+     * @param nodes the nodes to be searched
+     * @param oldValue the value to be replaced
+     * @param newValue the replacement value
      */
     private void replaceValueInNodes(NodeList nodes, String oldValue, String newValue) {
         
@@ -49,11 +51,16 @@ public class XmlOperationReplaceValue implements XmlOperation {
         }
     }
 
+
     /**
-     *
-     * @param rootElement
-     * @param args
-     * @throws IllegalArgumentException
+     * Replaces value of all nodes of the DOM structure object.
+     * @param rootElement the element of document root
+     * @param args the variable arguments. Valid input: 
+     * <ul>
+     *   <li>oldValue ... the old string to be replaced</li>   
+     *   <li>newValue ... the new string of replacement</li>    
+     * </ul>
+     * @throws IllegalArgumentException if arguments are wrong (count or type)
      */
     @Override
     public void execOperation(Element rootElement, Object... args) 

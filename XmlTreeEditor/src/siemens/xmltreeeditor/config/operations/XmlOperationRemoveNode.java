@@ -21,15 +21,16 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- *
+ * This class is used to implement <i>recursive remove nodes</i> operation.
+ * Basically removes all nodes of given name.
  * @author Martin Brazdil <martin.brazdil at gmail.com>
  */
 public class XmlOperationRemoveNode implements XmlOperation {
        
     /**
-     *
-     * @param nodes
-     * @param name
+     * Removes all nodes with given name recursively.
+     * @param nodes the list of nodes to be checked
+     * @param name the name of nodes to be removed
      */
     private void removeNodes(NodeList nodes, String name) {
         
@@ -44,10 +45,13 @@ public class XmlOperationRemoveNode implements XmlOperation {
     }
 
     /**
-     *
-     * @param rootElement
-     * @param args
-     * @throws IllegalArgumentException
+     * Removes all nodes with given name recursively over the DOM structure object.
+     * @param rootElement the element of document root
+     * @param args the variable arguments. Valid input: 
+     * <ul>
+     *   <li>name ... the string of name of nodes to be removed</li>     
+     * </ul>
+     * @throws IllegalArgumentException if arguments are wrong (count or type)
      */
     @Override
     public void execOperation(Element rootElement, Object... args) 

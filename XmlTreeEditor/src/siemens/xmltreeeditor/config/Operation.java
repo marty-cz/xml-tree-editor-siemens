@@ -25,7 +25,8 @@ import siemens.xmltreeeditor.XmlTreeEditorSetting;
 import siemens.xmltreeeditor.config.operations.XmlOperationEnum;
 
 /**
- *
+ * This class is used to represent a operation defined at 
+ * object (file) with JAXB annotation. 
  * @author Martin Brazdil <martin.brazdil at gmail.com>
  */
 @XmlRootElement
@@ -33,46 +34,49 @@ import siemens.xmltreeeditor.config.operations.XmlOperationEnum;
 public class Operation {
     
     /**
-     * 
+     * Operation type.
+     * @see siemens.xmltreeeditor.XmlTreeEditorSetting 
      */
-    private String operType = "";
+    private String operType;
     
     /**
-     * 
+     * Name of node.
      */
     private String nodeName;
     
     /**
-     * 
+     * Old value to be replaced.
      */
     private String oldValue;
     
     /**
-     * 
+     * New value of the replacement.
      */
     private String newValue;
     
     /**
-     * 
+     * Item of supported operation in enumeration.
+     * This attribute is used only for internal needs.
      */
     private XmlOperationEnum operation = XmlOperationEnum.OP_UNKNOWN;
     
     /**
-     *
-     * @return
+     * Gets a type/name of supported xml operation.
+     * @return the name of operation
      */
     public String getOperType() {
-        return operType;
+        return (operType == null) ? "" : operType;
     }
 
     /**
-     *
-     * @param operType
-     * @throws ValidationException
+     * Sets a type/name of operation.
+     * @param operType the type/name of operation
+     * @throws ValidationException if given operation is not supported
      */
     @XmlAttribute(name = XmlTreeEditorSetting.XML_ATTR_OPER_TYPE)
     public void setOperType(String operType) 
             throws ValidationException {
+        
         
         this.operation = XmlOperationEnum.findByName(operType);
         if (this.operation == XmlOperationEnum.OP_UNKNOWN) {
@@ -82,24 +86,24 @@ public class Operation {
     }
     
     /**
-     *
-     * @return
+     * Gets linked object of xml operation.
+     * @return null if operation is not supported, otherwise the xml operation object
      */
     public XmlOperationEnum getXmlOperation() {
         return operation;
     }
 
     /**
-     *
-     * @return
+     * Gets a name of nodes to be removed.
+     * @return the name of nodes
      */
     public String getNodeName() {
         return nodeName;
     }
 
     /**
-     *
-     * @param nodeName
+     * Sets a name of nodes to be removed.
+     * @param nodeName the name of nodes
      */
     @XmlAttribute(name = XmlTreeEditorSetting.XML_ATTR_NODE_NAME)
     public void setNodeName(String nodeName) {
@@ -107,16 +111,16 @@ public class Operation {
     }
 
     /**
-     *
-     * @return
+     * Gets an old value of node to be replaced.
+     * @return the value of node
      */
     public String getOldValue() {
         return oldValue;
     }
 
     /**
-     *
-     * @param oldValue
+     * Sets an old value of node to be replaced.
+     * @param oldValue the value of node
      */
     @XmlAttribute(name = XmlTreeEditorSetting.XML_ATTR_OLD_VAL)
     public void setOldValue(String oldValue) {
@@ -124,16 +128,16 @@ public class Operation {
     }
 
     /**
-     *
-     * @return
+     * Gets a new value of node of the replacement.
+     * @return the value of node
      */
     public String getNewValue() {
         return newValue;
     }
 
     /**
-     *
-     * @param newValue
+     * Sets a new value of node of the replacement.
+     * @param newValue the value of node
      */
     @XmlAttribute(name = XmlTreeEditorSetting.XML_ATTR_NEW_VAL)
     public void setNewValue(String newValue) {

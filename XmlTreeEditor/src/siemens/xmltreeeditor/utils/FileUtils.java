@@ -21,15 +21,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 /**
- *
+ * This class contains utilities for file operations.
  * @author Martin Brazdil <martin.brazdil at gmail.com>
  */
 public class FileUtils {
     
     /**
-     *
-     * @param f
-     * @throws IOException
+     * Verifies if given file path is valid and if file is readable.
+     * If is not readable exception is raised.
+     * @param f the file path to verification
+     * @throws IOException if path is <code>null</code> or file is not readable
      */
     public static void verifyFile(Path f) 
             throws IOException {

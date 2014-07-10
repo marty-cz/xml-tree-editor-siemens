@@ -26,7 +26,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import siemens.xmltreeeditor.XmlTreeEditorSetting;
 
 /**
- *
+ * This class is used to represent a configuration object (file) 
+ * with JAXB annotation. 
  * @author Martin Brazdil <martin.brazdil at gmail.com>
  */
 @XmlRootElement(name = XmlTreeEditorSetting.XML_NODE_CONFIG)
@@ -34,31 +35,34 @@ import siemens.xmltreeeditor.XmlTreeEditorSetting;
 public class Config {
     
     /**
-     * 
+     * File path of input xml file.
      */
-    private String input = "";
+    private String input;
     
     /**
-     * 
+     * File path of xsd file of input xml.
      */
-    private String schema = "";
+    private String schema;
     
     /**
-     * 
+     * List of supported xml operations.
+     * @see siemens.xmltreeeditor.config.operations.XmlOperationEnum
      */
-    private List<Operation> operations = new ArrayList<>();
+    private List<Operation> operations;
 
     /**
-     *
-     * @return
+     * Gets a path of input xml file.
+     * The path is relative to placement of config file.
+     * @return the path
      */
     public String getInput() {
-        return input;
+        return (input == null) ? "" : input;
     }
 
     /**
-     *
-     * @param input
+     * Sets a path of input xml file.
+     * The path is relative to placement of config file.
+     * @param input the path
      */
     @XmlElement(name = XmlTreeEditorSetting.XML_NODE_INPUT)
     public void setInput(String input) {
@@ -66,16 +70,18 @@ public class Config {
     }
 
     /**
-     *
-     * @return
+     * Gets a path of xsd file of input xml.
+     * The path is relative to placement of config file.
+     * @return the path
      */
     public String getSchema() {
-        return schema;
+        return (schema == null) ? "" : schema;
     }
 
     /**
-     *
-     * @param schema
+     * Sets a path of xsd file of input xml.
+     * The path is relative to placement of config file.
+     * @param schema the path
      */
     @XmlElement(name = XmlTreeEditorSetting.XML_NODE_SCHEMA)
     public void setSchema(String schema) {
@@ -83,16 +89,16 @@ public class Config {
     }
 
     /**
-     *
-     * @return
+     * Gets a list of valid operations to be used on input xml file.
+     * @return the list of operations
      */
     public List<Operation> getOperations() {
         return operations;
     }
 
     /**
-     *
-     * @param operations
+     * Sets a list of valid operations to be used on input xml file.
+     * @param operations the list of operations
      */
     @XmlElementWrapper(name = XmlTreeEditorSetting.XML_NODE_OPERS)
     @XmlElement(name=XmlTreeEditorSetting.XML_NODE_OPER)

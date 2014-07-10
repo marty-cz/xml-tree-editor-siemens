@@ -39,25 +39,27 @@ import org.xml.sax.SAXParseException;
 import siemens.xmltreeeditor.utils.FileUtils;
 
 /**
- *
+ * This class provides an access to the input xml file.
+ * Xml file is loaded from given path.
+ * Classical DOM is used because of XML modification is needed.
  * @author Martin Brazdil <martin.brazdil at gmail.com>
  */
 public class DomXmlHolder {
 
     /**
-     * 
+     * Loaded xml document. 
      */
     private Document xmlDocument;
     
     /**
-     * 
+     * Path of input xml file.
      */
     private final Path xmlFile;
 
     /**
-     *
-     * @param xmlFile
-     * @throws IOException
+     * Creates holder.
+     * @param xmlFile the input xml file path
+     * @throws IOException if input file is invalid
      */
     public DomXmlHolder(Path xmlFile)
             throws IOException {
@@ -67,15 +69,16 @@ public class DomXmlHolder {
     }
 
     /**
-     *
-     * @param xsdFile
-     * @throws IOException
-     * @throws SAXException
+     * Do the validation of input xml file according to a defined xsd schema.
+     * @param xsdFile the xsd file path
+     * @throws IOException if xsd file is invalid
+     * @throws SAXException if validation fails
      */
-    public void verifyXml(Path xsdFile)
+    public void validateXml(Path xsdFile)
             throws IOException, SAXException {
 
         FileUtils.verifyFile(xsdFile);
+          // xsd validation
         try {
             SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
             Schema schema = factory.newSchema(xsdFile.toFile());
@@ -89,8 +92,8 @@ public class DomXmlHolder {
     }
 
     /**
-     *
-     * @throws SAXException
+     * Do the parsing of input xml file by DOM specification.
+     * @throws SAXException if validation fails
      */
     public void parseXml()
             throws SAXException {
@@ -100,7 +103,7 @@ public class DomXmlHolder {
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = builderFactory.newDocumentBuilder();
 
-            // dont print the exception message !!!
+              // dont print the exception message !!!
             builder.setErrorHandler(new ErrorHandler() {
 
                 @Override
@@ -117,8 +120,12 @@ public class DomXmlHolder {
                 }
             });
 
+              // xml parsing
             Document doc = builder.parse(xmlFile.toFile());
+              // removes white characters (replaced by space character) 
+              // in values and attributes in xml
             doc.getDocumentElement().normalize();
+            
             xmlDocument = doc;
         } catch (SAXException | IOException | ParserConfigurationException ex) {
             throw new SAXException(xmlFile.getFileName() + ": Invalid XML structure: "
@@ -127,10 +134,10 @@ public class DomXmlHolder {
     }
 
     /**
-     *
-     * @param targetXmlFile
-     * @throws IOException
-     * @throws TransformerException
+     * Saves XML document object to the file.
+     * @param targetXmlFile the file path of target
+     * @throws IOException if target path is null
+     * @throws TransformerException if DOM to XML transformation fails
      */
     public void saveToXmlFile(Path targetXmlFile)
             throws IOException, TransformerException {
@@ -138,14 +145,15 @@ public class DomXmlHolder {
         if (targetXmlFile == null) {
             throw new IOException("Target XML file is unknown");
         }
+          // transformation to XML from DOM object
         try {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
-
+              // sets XML options an normalize content of DOM object
             transformer.setOutputProperty(OutputKeys.ENCODING, xmlDocument.getXmlEncoding());
             transformer.setOutputProperty(OutputKeys.VERSION, xmlDocument.getXmlVersion());
             getXmlRootElem().normalize();
-
+              // do the transformation and save it to the file
             DOMSource source = new DOMSource(getXmlRootElem());
             transformer.transform(source, new StreamResult(targetXmlFile.toFile()));
         } catch (TransformerException ex) {
@@ -155,8 +163,9 @@ public class DomXmlHolder {
     }
 
     /**
-     *
-     * @return
+     * Gets a element of document root.
+     * @return the element of document root or <code>null</code> if document 
+     *         is not loaded
      */
     public Element getXmlRootElem() {
         return (xmlDocument != null) ? xmlDocument.getDocumentElement() : null;

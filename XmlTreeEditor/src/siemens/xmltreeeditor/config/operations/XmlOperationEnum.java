@@ -21,28 +21,30 @@ import java.util.Map;
 import siemens.xmltreeeditor.XmlTreeEditorSetting;
 
 /**
- *
+ * Enumeration of available DOM XML modyfing operations.
  * @author Martin Brazdil <martin.brazdil at gmail.com>
  */
 public enum XmlOperationEnum {
     
     /**
-     *
+     * Unknown operation i.e. error.
      */
     OP_UNKNOWN(""),
 
     /**
-     *
+     * Recursive delete nodes operation.
+     * @see XmlOperationRemoveNode
      */
     OP_DELETE_NODE(XmlTreeEditorSetting.XML_OP_REMOVE_NODE),
 
     /**
-     *
+     * Value replace of all nodes operation.
+     * @see XmlOperationReplaceValue
      */
     OP_REPLACE_VALUE(XmlTreeEditorSetting.XML_OP_REPLACE_VALUE);
         
     /**
-     * 
+     * Map of an operation enum item and an operation object.
      */
     private static final Map<XmlOperationEnum, XmlOperation> OPERATIONS = new HashMap<>();
     static {
@@ -52,34 +54,38 @@ public enum XmlOperationEnum {
     }
    
     /**
-     * 
+     * Name of operation.
      */
     private final String name;
 
+    /**
+     * Contructor ...
+     * @param name the name of operation
+     */
     private XmlOperationEnum(String name) {
         this.name = (name != null) ? name : "";
     }
     
     /**
-     *
-     * @return
+     * Gets an operation object.
+     * @return the operation object or null (in case of <code>OP_UNKNOWN</code>)
      */
     public XmlOperation getOperation() {
         return OPERATIONS.get(this);
     }
 
     /**
-     *
-     * @return
+     * Gets a name of the operation.
+     * @return the name
      */
     public String getName() {
         return this.name;
-    }
+    }    
     
     /**
-     *
-     * @param name
-     * @return
+     * Finds proper enum item.
+     * @param name the name of operation
+     * @return <code>OP_UNKNOWN</code> if item is not found, otherwise the item
      */
     public static XmlOperationEnum findByName(String name){
         for(XmlOperationEnum op : values()) {

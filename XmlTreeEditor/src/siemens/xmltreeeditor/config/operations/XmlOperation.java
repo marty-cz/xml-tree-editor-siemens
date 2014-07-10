@@ -19,11 +19,19 @@ package siemens.xmltreeeditor.config.operations;
 import org.w3c.dom.Element;
 
 /**
- *
+ * This class is an interface of common XML modifying operations. 
+ * Operations are using a DOM structured object.
  * @author Martin Brazdil <martin.brazdil at gmail.com>
  */
 public interface XmlOperation {
     
+    /**
+     * Executes implemented operation over the DOM structure object.
+     * @param rootElement the element of document root
+     * @param args the variable arguments. To the specific explanation see 
+     *             implementation classes.
+     * @throws IllegalArgumentException if arguments are wrong (count or type)
+     */
     void execOperation(Element rootElement, Object... args)
             throws IllegalArgumentException;
     

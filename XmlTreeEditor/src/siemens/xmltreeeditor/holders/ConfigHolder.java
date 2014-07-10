@@ -30,31 +30,33 @@ import siemens.xmltreeeditor.config.operations.XmlOperationEnum;
 import siemens.xmltreeeditor.utils.FileUtils;
 
 /**
- *
+ * This class provides an access to the input config structure.
+ * Config is loaded from given path of xml file.
+ * JAXB (marshalling/unmarshalling) is used to the access of xml file.
  * @author Martin Brazdil <martin.brazdil at gmail.com>
  */
 public class ConfigHolder {
     
     /**
-     * 
+     * JAXB context (defines classes to marshalling process).
      */
     private final JAXBContext jaxbContext;
     
     /**
-     * 
+     * Path of xml config file.
      */
     private final Path configFile; 
     
     /**
-     * 
+     * Config object created from file.
      */
     private Config config;
 
     /**
-     *
-     * @param configFile
-     * @throws JAXBException
-     * @throws IOException
+     * Creates holder and JAXB context.
+     * @param configFile the config xml file path
+     * @throws JAXBException if JAXB context cannot be created
+     * @throws IOException if config file is invalid
      */
     public ConfigHolder(Path configFile) 
             throws JAXBException, IOException {
@@ -69,40 +71,59 @@ public class ConfigHolder {
     }
 
     /**
-     *
-     * @return
+     * Gets the config object loaded from xml config file.
+     * @return the config object or <code>null</code> if is not loaded
      */
     public Config getConfig() {
         return config;
     }
     
     /**
-     *
-     * @param op
-     * @param rootElement
-     * @throws IllegalArgumentException
+     * Executes all operation from config over input xml file.
+     * @param rootElement the element of document root
+     * @throws IllegalStateException if operation executon fails
      */
-    public void execOperation(Operation op, Element rootElement) 
+    public void execAllOperations(Element rootElement) 
+            throws IllegalStateException {
+        
+        if (config.getOperations() != null) {
+            for (Operation op : config.getOperations()) {        
+                try {
+                    execOperation(op, rootElement);            
+                } catch (Exception ex) {
+                    throw new IllegalStateException(op.getOperType()+"(): "+ex.getMessage(), ex);
+                }
+            }   
+        }
+    } 
+    
+    /**
+     * Executes given operation over input xml file.
+     * @param op the operation to be processed
+     * @param rootElement the element of document root
+     * @throws IllegalArgumentException if operation arguments are wrong (count or type)
+     */
+    private void execOperation(Operation op, Element rootElement) 
             throws IllegalArgumentException {
         
         XmlOperationEnum enumOp = op.getXmlOperation();        
         XmlOperation xmlOp = enumOp.getOperation();
         switch (enumOp) {
-            case OP_DELETE_NODE: {
+            case OP_DELETE_NODE: {   // recursive delete nodes by name
                 xmlOp.execOperation(rootElement, op.getNodeName());
                 break;
             }
-            case OP_REPLACE_VALUE: {
+            case OP_REPLACE_VALUE: { // replace value in all nodes (recursively)
                 xmlOp.execOperation(rootElement, op.getOldValue(), op.getNewValue());
                 break;
             }
-            default: break;
+            default: break;  // unknown operations is not processed
         }
     }
     
     /**
-     *
-     * @throws JAXBException
+     * Loads (unmarshalling) config object from config file.
+     * @throws JAXBException if unmarshalling error occurs
      */
     public void loadConfig() 
             throws JAXBException {
@@ -119,10 +140,10 @@ public class ConfigHolder {
     }
 
     /**
-     *
-     * @param targetConfigFile
-     * @throws JAXBException
-     * @throws IOException
+     * Saves (marshalling) config object to the given file.
+     * @param targetConfigFile the file path of target
+     * @throws JAXBException if marshalling error occurs
+     * @throws IOException if given target file is <code>null</code>
      */
     public void saveConfig(Path targetConfigFile) 
             throws JAXBException, IOException {
