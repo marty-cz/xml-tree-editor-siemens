@@ -68,22 +68,17 @@ public class XmlTreeEditor {
               // parsing input xml file
             domXmlHolder.parseXml();
               // validating input xml file accordig to the given xsd schema file  
-            boolean skipOperations = false;
             if (config.getSchema().isEmpty() == false) {
                 try {
                     domXmlHolder.validateXml(Paths.get(configParentPath + config.getSchema()));
                     System.err.println(String.format("Input xml file \"%s\" is valid according to schema \"%s\"",
                             config.getInput(), config.getSchema()));
-                } catch (IOException ex) {
-                    skipOperations = true;  // !! save unchanched input xml file
-                } catch (SAXException ex) {
+                } catch (IOException | SAXException ex) {
                     printError(ex.getMessage(), XmlTreeEditorSetting.OK_ERR_CODE);  // do not exit !
                 }     
             }
               // execution of xml modification operations (sets at config file)
-            if (skipOperations == false) {
-                configHolder.execAllOperations(domXmlHolder.getXmlRootElem());
-            }
+            configHolder.execAllOperations(domXmlHolder.getXmlRootElem());
               // save the result to the new file
             domXmlHolder.saveToXmlFile(Paths.get(configParentPath 
                     + XmlTreeEditorSetting.getXmlResultPath(config.getInput())));
