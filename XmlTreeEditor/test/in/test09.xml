@@ -5,27 +5,15 @@
     <ARTIST>Bob Dylan</ARTIST>
     <COUNTRY>USA</COUNTRY>
     <COMPANY>Columbia</COMPANY>
-    <YEAR>1985</YEAR>
+    <PRICE>10.90</PRICE>
+    <YEARxxxxxxx>1985</YEARxxxxxxx>
   </CD>
   <CD ID="cd02">
     <TITLE>Hide your heart</TITLE>
     <ARTIST>Bonnie Tylor</ARTIST>
     <COUNTRY>UK</COUNTRY>
     <COMPANY>CBS Records</COMPANY>
+    <PRICE>9.90</PRICE>
     <YEAR>1988</YEAR>
-  </CD>
-  <CD ID="cd03">
-    <TITLE>Greatest Hits</TITLE>
-    <ARTIST>Dolly Parton</ARTIST>
-    <COUNTRY>USA</COUNTRY>
-    <COMPANY>RCA</COMPANY>
-    <YEAR>1982</YEAR>
-  </CD>
-  <CD ID="cd04">
-    <TITLE>Still got the blues</TITLE>
-    <ARTIST>Gary More</ARTIST>
-    <COUNTRY>UK</COUNTRY>
-    <COMPANY>Virgin redords</COMPANY>
-    <YEAR>1990</YEAR>
   </CD>
 </CATALOG> 

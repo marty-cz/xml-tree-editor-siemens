@@ -1,0 +1,1 @@
+Error: test06.xml: Does not correspond with schema "schema02.xsd": cvc-complex-type.3.2.2: Attribute 'ID' is not allowed to appear in element 'CD'.

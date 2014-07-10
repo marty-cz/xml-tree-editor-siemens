@@ -1,0 +1,1 @@
+Error: test10.xml: Does not correspond with schema "schema03.xsd": s4s-elt-invalid-content.1: The content of '#AnonType_CDCATALOG' is invalid.  Element 'attrib' is invalid, misplaced, or occurs too often.

@@ -7,7 +7,7 @@ function verifyOutput() {
  
   diff -arqN $1 $2 > /dev/null
   if [[ $? -ne 0 ]]; then
-  	echo $filename"."$fileext": Error: Files are different."
+  	echo $filename": "$filename"."$fileext": Error: Files are different."
   fi
 }
 
@@ -24,32 +24,28 @@ if [[ $? -ne 0 ]]; then
   echo "Error: Build failed."
   exit 1
 fi 
-echo '== Running ...'
+echo '== Running ... (if no error is shown then test is passed)'
 rm -f -r $tmp_path 2> /dev/null
 mkdir $tmp_path 2> /dev/null
 cd $in_path
 find -L *.config | while read line; do
   filename="${line%.*}"
   line=`readlink -e $line`
-  java -jar $dist_path/XmlTreeEditor.jar $line > $tmp_path"/"$filename".out"
-  if [[ $? -ne 0 ]]; then
-    echo $filename": Error: Running decoder failed."
+  java -jar $dist_path/XmlTreeEditor.jar $line 2> $tmp_path"/"$filename".out"
+	# testing output
+  verifyOutput $tmp_path"/"$filename".out" $ref_path"/"$filename".out" 
+  # testing result xml
+  if [ -f $ref_path"/"$filename".xml2" ]; then 
+    if [ -f $in_path"/"$filename".xml2" ]; then
+      verifyOutput $in_path"/"$filename".xml2" $ref_path"/"$filename".xml2"
+      mv $in_path"/"$filename".xml2" $tmp_path"/"$filename".xml2" 
+    else 
+      echo $filename": Error: Expected xml file as result of the program."
+    fi
   else
-  	# testing output
-    verifyOutput $tmp_path"/"$filename".out" $ref_path"/"$filename".out" 
-    # testing result xml
-    if [ -f $ref_path"/"$filename".xml2" ]; then 
-      if [ -f $in_path"/"$filename".xml2" ]; then
-        verifyOutput $in_path"/"$filename".xml2" $ref_path"/"$filename".xml2"
-        mv $in_path"/"$filename".xml2" $tmp_path"/"$filename".xml2" 
-      else 
-        echo $filename": Error: Expected xml file as result of the program."
-      fi
-    else
-      if [ -f $in_path"/"$filename".xml2" ]; then	
-         echo $filename": Error: Unexpected xml file as result of the program."
-         mv $in_path"/"$filename".xml2" $tmp_path"/"$filename".xml2" 
-      fi
+    if [ -f $in_path"/"$filename".xml2" ]; then	
+       echo $filename": Error: Unexpected xml file as result of the program."
+       mv $in_path"/"$filename".xml2" $tmp_path"/"$filename".xml2" 
     fi
   fi
 done

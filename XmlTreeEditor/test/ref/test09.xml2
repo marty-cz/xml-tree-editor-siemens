@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-2"?><CATALOG>
+  <CD ID="cd01">
+    <TITLE>Empire Burlesque</TITLE>
+    <ARTIST>Bob Dylan</ARTIST>
+    <COUNTRY>USA</COUNTRY>
+    <COMPANY>Columbia</COMPANY>
+    <PRICE>10.90</PRICE>
+    <YEARxxxxxxx>1985</YEARxxxxxxx>
+  </CD>
+  <CD ID="cd02">
+    <TITLE>Hide your heart</TITLE>
+    <ARTIST>Bonnie Tylor</ARTIST>
+    <COUNTRY>UK</COUNTRY>
+    <COMPANY>CBS Records</COMPANY>
+    <PRICE>9.90</PRICE>
+    <YEAR>1988</YEAR>
+  </CD>
+</CATALOG>
