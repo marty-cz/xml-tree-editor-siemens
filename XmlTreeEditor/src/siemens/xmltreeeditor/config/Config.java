@@ -33,34 +33,67 @@ import siemens.xmltreeeditor.XmlTreeEditorSetting;
 @XmlAccessorType(XmlAccessType.NONE)
 public class Config {
     
+    /**
+     * 
+     */
     private String input = "";
     
+    /**
+     * 
+     */
     private String schema = "";
     
+    /**
+     * 
+     */
     private List<Operation> operations = new ArrayList<>();
 
+    /**
+     *
+     * @return
+     */
     public String getInput() {
         return input;
     }
 
+    /**
+     *
+     * @param input
+     */
     @XmlElement(name = XmlTreeEditorSetting.XML_NODE_INPUT)
     public void setInput(String input) {
         this.input = input;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getSchema() {
         return schema;
     }
 
+    /**
+     *
+     * @param schema
+     */
     @XmlElement(name = XmlTreeEditorSetting.XML_NODE_SCHEMA)
     public void setSchema(String schema) {
         this.schema = schema;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Operation> getOperations() {
         return operations;
     }
 
+    /**
+     *
+     * @param operations
+     */
     @XmlElementWrapper(name = XmlTreeEditorSetting.XML_NODE_OPERS)
     @XmlElement(name=XmlTreeEditorSetting.XML_NODE_OPER)
     public void setOperations(List<Operation> operations) {

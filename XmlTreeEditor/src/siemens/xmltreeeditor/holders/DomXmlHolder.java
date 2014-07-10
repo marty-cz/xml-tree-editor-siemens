@@ -44,9 +44,21 @@ import siemens.xmltreeeditor.utils.FileUtils;
  */
 public class DomXmlHolder {
 
+    /**
+     * 
+     */
     private Document xmlDocument;
+    
+    /**
+     * 
+     */
     private final Path xmlFile;
 
+    /**
+     *
+     * @param xmlFile
+     * @throws IOException
+     */
     public DomXmlHolder(Path xmlFile)
             throws IOException {
 
@@ -54,6 +66,12 @@ public class DomXmlHolder {
         this.xmlFile = xmlFile;
     }
 
+    /**
+     *
+     * @param xsdFile
+     * @throws IOException
+     * @throws SAXException
+     */
     public void verifyXml(Path xsdFile)
             throws IOException, SAXException {
 
@@ -70,6 +88,10 @@ public class DomXmlHolder {
         }
     }
 
+    /**
+     *
+     * @throws SAXException
+     */
     public void parseXml()
             throws SAXException {
 
@@ -104,6 +126,12 @@ public class DomXmlHolder {
         }
     }
 
+    /**
+     *
+     * @param targetXmlFile
+     * @throws IOException
+     * @throws TransformerException
+     */
     public void saveToXmlFile(Path targetXmlFile)
             throws IOException, TransformerException {
 
@@ -126,6 +154,10 @@ public class DomXmlHolder {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public Element getXmlRootElem() {
         return (xmlDocument != null) ? xmlDocument.getDocumentElement() : null;
     }

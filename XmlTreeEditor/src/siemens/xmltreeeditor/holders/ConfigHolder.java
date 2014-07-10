@@ -35,10 +35,27 @@ import siemens.xmltreeeditor.utils.FileUtils;
  */
 public class ConfigHolder {
     
+    /**
+     * 
+     */
     private final JAXBContext jaxbContext;
+    
+    /**
+     * 
+     */
     private final Path configFile; 
+    
+    /**
+     * 
+     */
     private Config config;
 
+    /**
+     *
+     * @param configFile
+     * @throws JAXBException
+     * @throws IOException
+     */
     public ConfigHolder(Path configFile) 
             throws JAXBException, IOException {
         
@@ -51,10 +68,20 @@ public class ConfigHolder {
         this.configFile = configFile;
     }
 
+    /**
+     *
+     * @return
+     */
     public Config getConfig() {
         return config;
     }
     
+    /**
+     *
+     * @param op
+     * @param rootElement
+     * @throws IllegalArgumentException
+     */
     public void execOperation(Operation op, Element rootElement) 
             throws IllegalArgumentException {
         
@@ -73,6 +100,10 @@ public class ConfigHolder {
         }
     }
     
+    /**
+     *
+     * @throws JAXBException
+     */
     public void loadConfig() 
             throws JAXBException {
         
@@ -87,6 +118,12 @@ public class ConfigHolder {
         }
     }
 
+    /**
+     *
+     * @param targetConfigFile
+     * @throws JAXBException
+     * @throws IOException
+     */
     public void saveConfig(Path targetConfigFile) 
             throws JAXBException, IOException {
         

@@ -26,6 +26,11 @@ import java.nio.file.Path;
  */
 public class FileUtils {
     
+    /**
+     *
+     * @param f
+     * @throws IOException
+     */
     public static void verifyFile(Path f) 
             throws IOException {
         if (f == null || Files.isReadable(f) == false) {

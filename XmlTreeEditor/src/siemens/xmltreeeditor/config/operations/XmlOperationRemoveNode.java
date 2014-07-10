@@ -26,7 +26,12 @@ import org.w3c.dom.NodeList;
  */
 public class XmlOperationRemoveNode implements XmlOperation {
        
-    public void removeNodes(NodeList nodes, String name) {
+    /**
+     *
+     * @param nodes
+     * @param name
+     */
+    private void removeNodes(NodeList nodes, String name) {
         
         for (int i = 0; i < nodes.getLength(); i++) {
             Node n = nodes.item(i);
@@ -38,6 +43,12 @@ public class XmlOperationRemoveNode implements XmlOperation {
         }
     }
 
+    /**
+     *
+     * @param rootElement
+     * @param args
+     * @throws IllegalArgumentException
+     */
     @Override
     public void execOperation(Element rootElement, Object... args) 
             throws IllegalArgumentException {

@@ -26,10 +26,24 @@ import siemens.xmltreeeditor.XmlTreeEditorSetting;
  */
 public enum XmlOperationEnum {
     
+    /**
+     *
+     */
     OP_UNKNOWN(""),
+
+    /**
+     *
+     */
     OP_DELETE_NODE(XmlTreeEditorSetting.XML_OP_REMOVE_NODE),
+
+    /**
+     *
+     */
     OP_REPLACE_VALUE(XmlTreeEditorSetting.XML_OP_REPLACE_VALUE);
         
+    /**
+     * 
+     */
     private static final Map<XmlOperationEnum, XmlOperation> OPERATIONS = new HashMap<>();
     static {
         OPERATIONS.put(OP_UNKNOWN, null);
@@ -37,20 +51,36 @@ public enum XmlOperationEnum {
         OPERATIONS.put(OP_REPLACE_VALUE, new XmlOperationReplaceValue());
     }
    
+    /**
+     * 
+     */
     private final String name;
 
     private XmlOperationEnum(String name) {
         this.name = (name != null) ? name : "";
     }
     
+    /**
+     *
+     * @return
+     */
     public XmlOperation getOperation() {
         return OPERATIONS.get(this);
     }
 
+    /**
+     *
+     * @return
+     */
     public String getName() {
         return this.name;
     }
     
+    /**
+     *
+     * @param name
+     * @return
+     */
     public static XmlOperationEnum findByName(String name){
         for(XmlOperationEnum op : values()) {
             if (op.getName().equals(name)) {

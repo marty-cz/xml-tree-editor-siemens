@@ -26,6 +26,12 @@ import org.w3c.dom.NodeList;
  */
 public class XmlOperationReplaceValue implements XmlOperation {
 
+    /**
+     * 
+     * @param nodes
+     * @param oldValue
+     * @param newValue 
+     */
     private void replaceValueInNodes(NodeList nodes, String oldValue, String newValue) {
         
         if (oldValue == null) {
@@ -43,6 +49,12 @@ public class XmlOperationReplaceValue implements XmlOperation {
         }
     }
 
+    /**
+     *
+     * @param rootElement
+     * @param args
+     * @throws IllegalArgumentException
+     */
     @Override
     public void execOperation(Element rootElement, Object... args) 
             throws IllegalArgumentException {

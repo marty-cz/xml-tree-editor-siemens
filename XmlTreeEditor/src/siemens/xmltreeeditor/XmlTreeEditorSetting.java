@@ -22,22 +22,69 @@ package siemens.xmltreeeditor;
  */
 public class XmlTreeEditorSetting {
     
+    /**
+     *
+     */
     public static final int CONFIG_ARG_IDX = 1;
     
+    /**
+     *
+     */
     public static final int COMMON_ERR_CODE = 1;
     
+    /**
+     *
+     */
     public static final String XML_NODE_CONFIG = "config";
+
+    /**
+     *
+     */
     public static final String XML_NODE_INPUT  = "input";
+
+    /**
+     *
+     */
     public static final String XML_NODE_SCHEMA = "schema";
+
+    /**
+     *
+     */
     public static final String XML_NODE_OPERS  = "operations";
+
+    /**
+     *
+     */
     public static final String XML_NODE_OPER   = "operation";
     
+    /**
+     *
+     */
     public static final String XML_OP_REMOVE_NODE = "removeNode";
+
+    /**
+     *
+     */
     public static final String XML_OP_REPLACE_VALUE = "replaceValue";
     
+    /**
+     *
+     */
     public static final String XML_ATTR_OPER_TYPE = "operType";
+
+    /**
+     *
+     */
     public static final String XML_ATTR_NODE_NAME = "nodeName";
+
+    /**
+     *
+     */
     public static final String XML_ATTR_OLD_VAL   = "oldValue";
+
+    /**
+     *
+     */
     public static final String XML_ATTR_NEW_VAL   = "newValue";
     
 }

@@ -31,6 +31,11 @@ import siemens.xmltreeeditor.holders.DomXmlHolder;
  */
 public class XmlTreeEditor {
     
+    /**
+     * 
+     * @param errMsg
+     * @param errCode 
+     */
     private static void printError(String errMsg, int errCode) {
         System.err.println("Error: " + errMsg);
         if (errCode > 0) {

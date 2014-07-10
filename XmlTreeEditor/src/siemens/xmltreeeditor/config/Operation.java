@@ -32,21 +32,44 @@ import siemens.xmltreeeditor.config.operations.XmlOperationEnum;
 @XmlAccessorType(XmlAccessType.NONE)
 public class Operation {
     
+    /**
+     * 
+     */
     private String operType = "";
     
+    /**
+     * 
+     */
     private String nodeName;
     
+    /**
+     * 
+     */
     private String oldValue;
     
+    /**
+     * 
+     */
     private String newValue;
     
+    /**
+     * 
+     */
     private XmlOperationEnum operation = XmlOperationEnum.OP_UNKNOWN;
     
-
+    /**
+     *
+     * @return
+     */
     public String getOperType() {
         return operType;
     }
 
+    /**
+     *
+     * @param operType
+     * @throws ValidationException
+     */
     @XmlAttribute(name = XmlTreeEditorSetting.XML_ATTR_OPER_TYPE)
     public void setOperType(String operType) 
             throws ValidationException {
@@ -58,32 +81,60 @@ public class Operation {
         this.operType = operType; 
     }
     
+    /**
+     *
+     * @return
+     */
     public XmlOperationEnum getXmlOperation() {
         return operation;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getNodeName() {
         return nodeName;
     }
 
+    /**
+     *
+     * @param nodeName
+     */
     @XmlAttribute(name = XmlTreeEditorSetting.XML_ATTR_NODE_NAME)
     public void setNodeName(String nodeName) {
         this.nodeName = nodeName;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getOldValue() {
         return oldValue;
     }
 
+    /**
+     *
+     * @param oldValue
+     */
     @XmlAttribute(name = XmlTreeEditorSetting.XML_ATTR_OLD_VAL)
     public void setOldValue(String oldValue) {
         this.oldValue = oldValue;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getNewValue() {
         return newValue;
     }
 
+    /**
+     *
+     * @param newValue
+     */
     @XmlAttribute(name = XmlTreeEditorSetting.XML_ATTR_NEW_VAL)
     public void setNewValue(String newValue) {
         this.newValue = newValue;
