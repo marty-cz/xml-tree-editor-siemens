@@ -14,7 +14,7 @@ Operation means some change in data or some structure change of provided xml tre
 The result output (the changed xml tree) will be stored to the same directory with same name as original file, only number `2` will be appended to the file extension. For example from `test.xml` it will create `test.xml2`.
 
 Error messages are printed to the `stderr` (incl. message of "validation ok"). 
-If error occurs (errors of validation input file is only printed) then application is quited with error code `1`.
+If error occurs (errors of validation input file is only printed) then application is quited with error code `1` otherwise `0` (OK).
 
 ## Usage
 
