@@ -17,11 +17,13 @@
 package siemens.xmltreeeditor;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
-import javax.xml.bind.JAXBException;
+import org.xml.sax.SAXException;
 import siemens.xmltreeeditor.config.Config;
-import siemens.xmltreeeditor.config.ConfigHelper;
 import siemens.xmltreeeditor.config.Operation;
+import siemens.xmltreeeditor.holders.ConfigHolder;
+import siemens.xmltreeeditor.holders.DomXmlHolder;
 
 /**
  *
@@ -45,14 +47,38 @@ public class XmlTreeEditor {
                     XmlTreeEditorSetting.COMMON_ERR_CODE);
         }
         try {
-            Config conf = ConfigHelper.loadConfigFromXmlFile(Paths.get(args[XmlTreeEditorSetting.CONFIG_ARG_IDX-1]));
-            System.out.println("Successfully loaded");
-            ConfigHelper.saveConfigToXmlFile(null, conf);
-            System.out.println("Successfully saved");
-        } catch (IOException | JAXBException ex) {
-            printError(args[XmlTreeEditorSetting.CONFIG_ARG_IDX-1] +": " + ex.getMessage(),
-                    XmlTreeEditorSetting.COMMON_ERR_CODE);
-        }
+            Path configPath = Paths.get(args[XmlTreeEditorSetting.CONFIG_ARG_IDX-1]);
+            ConfigHolder configHolder = new ConfigHolder(configPath);
+            configHolder.loadConfig();
+            Config config = configHolder.getConfig();      
+            
+            String configParentPath = configPath.getParent().toString() + System.getProperty("file.separator");
+            
+            DomXmlHolder domXmlHolder = new DomXmlHolder(Paths.get(configParentPath + config.getInput()));
+                    
+            if (config.getSchema().isEmpty() == false) {
+               try {  
+                    domXmlHolder.verifyXml(Paths.get(configParentPath + config.getSchema()));
+               } catch (IOException | SAXException ex) {
+                    printError(ex.getMessage(), 0);  // do not exit !
+               }
+            }            
+            domXmlHolder.parseXml();
+            
+            for (Operation op : config.getOperations()) {
+                try {
+                    configHolder.execOperation(op, domXmlHolder.getXmlRootElem());
+                } catch (IllegalArgumentException ex) {
+                    printError(op.getOperType()+"(): "+ex.getMessage(), 0);  // do not exit !
+                }
+            }
+            
+            domXmlHolder.saveToXmlFile(Paths.get(configParentPath + config.getInput() + "2"));
+    
+        } catch (Exception ex) {
+           // ex.printStackTrace();
+            printError(ex.getMessage(), XmlTreeEditorSetting.COMMON_ERR_CODE);
+        } 
     }
     
 }

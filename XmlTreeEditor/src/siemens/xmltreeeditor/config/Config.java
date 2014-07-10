@@ -16,17 +16,13 @@
 
 package siemens.xmltreeeditor.config;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementDecl;
-import javax.xml.bind.annotation.XmlElementRef;
-import javax.xml.bind.annotation.XmlElementRefs;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
 import siemens.xmltreeeditor.XmlTreeEditorSetting;
 
 /**
@@ -37,11 +33,11 @@ import siemens.xmltreeeditor.XmlTreeEditorSetting;
 @XmlAccessorType(XmlAccessType.NONE)
 public class Config {
     
-    private String input;
+    private String input = "";
     
-    private String schema;
+    private String schema = "";
     
-    private List<Operation> operations = null;
+    private List<Operation> operations = new ArrayList<>();
 
     public String getInput() {
         return input;
@@ -70,6 +66,5 @@ public class Config {
     public void setOperations(List<Operation> operations) {
         this.operations = operations;
     }
-    
     
 }

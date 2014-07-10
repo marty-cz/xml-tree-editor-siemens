@@ -22,6 +22,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import siemens.xmltreeeditor.XmlTreeEditorSetting;
+import siemens.xmltreeeditor.config.operations.XmlOperationEnum;
 
 /**
  *
@@ -31,7 +32,7 @@ import siemens.xmltreeeditor.XmlTreeEditorSetting;
 @XmlAccessorType(XmlAccessType.NONE)
 public class Operation {
     
-    private String operType;
+    private String operType = "";
     
     private String nodeName;
     
@@ -39,26 +40,33 @@ public class Operation {
     
     private String newValue;
     
+    private XmlOperationEnum operation = XmlOperationEnum.OP_UNKNOWN;
+    
 
     public String getOperType() {
         return operType;
     }
 
     @XmlAttribute(name = XmlTreeEditorSetting.XML_ATTR_OPER_TYPE)
-    public void setOperType(String operType) throws ValidationException {
-        for (String oper: XmlTreeEditorSetting.XML_OPS) {
-            if (oper.equals(operType)) {
-               this.operType = operType; 
-               return ;
-            }
+    public void setOperType(String operType) 
+            throws ValidationException {
+        
+        this.operation = XmlOperationEnum.findByName(operType);
+        if (this.operation == XmlOperationEnum.OP_UNKNOWN) {
+            throw new ValidationException("Invalid type of operation \"" + operType + "\"");
         }
-        throw new ValidationException("Invalid type of operation \"" + operType + "\"");
+        this.operType = operType; 
+    }
+    
+    public XmlOperationEnum getXmlOperation() {
+        return operation;
     }
 
     public String getNodeName() {
         return nodeName;
     }
 
+    @XmlAttribute(name = XmlTreeEditorSetting.XML_ATTR_NODE_NAME)
     public void setNodeName(String nodeName) {
         this.nodeName = nodeName;
     }
@@ -79,17 +87,6 @@ public class Operation {
     @XmlAttribute(name = XmlTreeEditorSetting.XML_ATTR_NEW_VAL)
     public void setNewValue(String newValue) {
         this.newValue = newValue;
-    }
-    
-    public void doOperation() {
-        switch (operType) {
-            case XmlTreeEditorSetting.XML_OP_DELETE_NODE: {
-                break;   
-            }
-            case XmlTreeEditorSetting.XML_OP_REPLACE_VAL: {
-                break;
-            }
-        }  
     }
     
 }
